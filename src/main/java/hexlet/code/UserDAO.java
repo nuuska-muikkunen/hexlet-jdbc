@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
+import java.util.ArrayList;
 
 // Импорт User
 
@@ -52,6 +53,31 @@ public class UserDAO {
                 return Optional.of(user);
             }
             return Optional.empty();
+        }
+    }
+// удаляет пользователей из таблицы по их идентификатору
+    public void del(Long id) throws SQLException {
+        var sql = "DELETE FROM users WHERE id = ?";
+        try (var stmt = connection.prepareStatement(sql)) {
+            stmt.setLong(1, id);
+            stmt.executeUpdate();
+        }
+    }
+//выводит содержимое все таблицы
+    public ArrayList<User> getEntities() throws SQLException {
+        var sql = "SELECT * FROM users";
+        try (var stmt = connection.prepareStatement(sql)) {
+            var resultSet = stmt.executeQuery();
+            var result = new ArrayList<User>();
+            while (resultSet.next()) {
+                var id = resultSet.getLong("id");
+                var name = resultSet.getString("username");
+                var phone = resultSet.getString("phone");
+                var user = new User(name, phone);
+                user.setId(id);
+                result.add(user);
+            }
+            return result;
         }
     }
 }

@@ -4,6 +4,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 //import java.sql.Statement;
 //import java.util.OptionalLong;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Application {
     public static void main(String[] args) throws SQLException {
@@ -29,6 +31,20 @@ public class Application {
 // Возвращается Optional<User>
             var userTemp = dao.find(user.getId()).get();
             System.out.println(userTemp.getId() == user.getId());
+            dao.save(user0);
+            dao.save(user1);
+            dao.save(user2);
+            dao.save(user3);
+            System.out.println(user0.getId());
+            System.out.println(user1.getId());
+            System.out.println(user2.getId());
+            System.out.println(user3.getId());
+            var list0 = dao.getEntities();
+            System.out.println(list0.toString());
+            dao.del(user2.getId());
+            var list = dao.getEntities();
+            System.out.println(list.toString());
+
 //            userTemp.getId() == user.getId(); // true
 
 //            var sql2 = "INSERT INTO users (username, phone) VALUES ('tommy', '123456789')";

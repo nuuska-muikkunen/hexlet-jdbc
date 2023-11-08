@@ -37,4 +37,12 @@ public class User {
         this.phone = phone;
     }
 
+    @Override
+    public String toString() {
+        return "\nUser{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", phone='" + phone + '\'' +
+                "}";
+    }
 }
